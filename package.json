@@ -1,0 +1,19 @@
+{
+  "name": "social-login-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ex-platform/social-login-service.git"
+  },
+  "author": "ex-platform",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ex-platform/social-login-service/issues"
+  },
+  "homepage": "https://github.com/ex-platform/social-login-service#readme"
+}
