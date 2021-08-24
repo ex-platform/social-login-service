@@ -1,4 +1,8 @@
-export function naverService () {
+declare global {
+    interface Window { naver: any }
+}
+
+export function naverService() {
 	let naverLogin: any;
 
 	const initiate = (clientId: string, callbackUrl: string) => {

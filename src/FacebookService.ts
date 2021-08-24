@@ -1,3 +1,10 @@
+declare global {
+	interface Window {
+		fbAsyncInit: any;
+		FB: any;
+	}
+}
+
 export async function loadInitFacebook(appId: string) {
 	await loadFacebookSDK('facebook-jssdk');
 	await initFacebook(appId);
