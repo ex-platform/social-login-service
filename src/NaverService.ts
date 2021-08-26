@@ -1,25 +1,37 @@
 declare global {
-    interface Window { naver: any }
+	interface Window { naver: any }
 }
 
-export function naverService() {
+interface ButtonStyles {
+	buttonColor: string;
+	buttonType: string;
+	buttonHeight: string;
+}
+
+export default function naverService () {
 	let naverLogin: any;
 
-	const initiate = (clientId: string, callbackUrl: string) => {
+	const initiate = (clientId: string, callbackUrl: string, isPopup: boolean, buttonStyles: ButtonStyles) => {
 		naverLogin = new window.naver.LoginWithNaverId({
 			clientId,
 			callbackUrl,
-			isPopup: false /* 팝업을 통한 연동처리 여부 */,
+			isPopup,
 			loginButton: {
-        color: 'green',
-        type: 3,
-        height: 120,
+        color: buttonStyles.buttonColor,
+        type: buttonStyles.buttonType,
+        height: buttonStyles.buttonHeight,
       } /* 로그인 버튼의 타입을 지정 */,
 		});
 		setNaver();
 	}
 
-	const initNaver = (clientId: string, callbackUrl: string) => {
+	const initNaver = (
+		clientId: string,
+		callbackUrl: string,
+		isPopup: boolean,
+		callbakFunction: Function, 
+		buttonStyles: ButtonStyles
+	) => {
 		const scriptId = 'naver_login';
 		const isExist = !!document.getElementById(scriptId);
 
@@ -27,16 +39,16 @@ export function naverService() {
 			const script = document.createElement('script')
 			script.src = 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js';
 			script.onload = () => {
-				initiate(clientId, callbackUrl);
-				console.log(`naverLogin`, naverLogin);
+				initiate(clientId, callbackUrl, isPopup, buttonStyles);
 				naverLogin.getLoginStatus((status: boolean) => {
-					if (status) {
-							const email = naverLogin.user.email;
-							const name = naverLogin.user.name;
-							console.log(email, name);
-					} else {
-							console.log("AccessToken이 올바르지 않습니다.");
-					}
+					// if (status) {
+					// 		const email = naverLogin.user.email;
+					// 		const name = naverLogin.user.name;
+					// 		console.log(email, name);
+					// } else {
+					// 		console.log("AccessToken이 올바르지 않습니다.");
+					// }
+					callbakFunction();
 				});
 			}
 			script.onerror = error => console.log(error);
