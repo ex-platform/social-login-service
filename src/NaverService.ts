@@ -29,7 +29,8 @@ export function naverService () {
 		clientId: string,
 		callbackUrl: string,
 		isPopup: boolean,
-		callbakFunction: Function, 
+		success: Function,
+		fail: Function,
 		buttonStyles: ButtonStyles
 	) => {
 		const scriptId = 'naver_login';
@@ -41,14 +42,11 @@ export function naverService () {
 			script.onload = () => {
 				initiate(clientId, callbackUrl, isPopup, buttonStyles);
 				naverLogin.getLoginStatus((status: boolean) => {
-					// if (status) {
-					// 		const email = naverLogin.user.email;
-					// 		const name = naverLogin.user.name;
-					// 		console.log(email, name);
-					// } else {
-					// 		console.log("AccessToken이 올바르지 않습니다.");
-					// }
-					callbakFunction(status);
+					if (status) {
+						success(naverLogin);
+					} else {
+						fail();
+					}
 				});
 			}
 			script.onerror = error => console.log(error);

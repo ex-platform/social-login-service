@@ -13,7 +13,7 @@ export function naverService() {
         });
         setNaver();
     };
-    const initNaver = (clientId, callbackUrl, isPopup, callbakFunction, buttonStyles) => {
+    const initNaver = (clientId, callbackUrl, isPopup, success, fail, buttonStyles) => {
         const scriptId = 'naver_login';
         const isExist = !!document.getElementById(scriptId);
         if (!isExist) {
@@ -22,14 +22,12 @@ export function naverService() {
             script.onload = () => {
                 initiate(clientId, callbackUrl, isPopup, buttonStyles);
                 naverLogin.getLoginStatus((status) => {
-                    // if (status) {
-                    // 		const email = naverLogin.user.email;
-                    // 		const name = naverLogin.user.name;
-                    // 		console.log(email, name);
-                    // } else {
-                    // 		console.log("AccessToken이 올바르지 않습니다.");
-                    // }
-                    callbakFunction(status);
+                    if (status) {
+                        success(naverLogin);
+                    }
+                    else {
+                        fail();
+                    }
                 });
             };
             script.onerror = error => console.log(error);
