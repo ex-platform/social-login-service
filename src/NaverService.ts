@@ -8,7 +8,7 @@ interface ButtonStyles {
 	buttonHeight: string;
 }
 
-export default function naverService () {
+export function naverService () {
 	let naverLogin: any;
 
 	const initiate = (clientId: string, callbackUrl: string, isPopup: boolean, buttonStyles: ButtonStyles) => {
