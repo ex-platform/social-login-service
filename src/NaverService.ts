@@ -48,7 +48,7 @@ export function naverService () {
 					// } else {
 					// 		console.log("AccessToken이 올바르지 않습니다.");
 					// }
-					callbakFunction();
+					callbakFunction(status);
 				});
 			}
 			script.onerror = error => console.log(error);

@@ -1,4 +1,4 @@
-export default function naverService() {
+export function naverService() {
     let naverLogin;
     const initiate = (clientId, callbackUrl, isPopup, buttonStyles) => {
         naverLogin = new window.naver.LoginWithNaverId({
@@ -29,7 +29,7 @@ export default function naverService() {
                     // } else {
                     // 		console.log("AccessToken이 올바르지 않습니다.");
                     // }
-                    callbakFunction();
+                    callbakFunction(status);
                 });
             };
             script.onerror = error => console.log(error);
