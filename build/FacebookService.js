@@ -1,14 +1,6 @@
 export async function loadInitFacebook(appId) {
     await loadFacebookSDK('facebook-jssdk');
     await initFacebook(appId);
-    // window.FB.login((response: any) => {
-    // 	if (response.authResponse) {
-    // 		alert("You are logged in &amp; cookie set!");
-    // 	} else {
-    // 		alert("User cancelled login or did not fully authorize.");
-    // 	}
-    // });
-    // return false;
 }
 async function initFacebook(appId) {
     window.fbAsyncInit = function () {
@@ -33,19 +25,20 @@ async function loadFacebookSDK(id) {
         fjs.parentNode.insertBefore(js, fjs);
     }
 }
-export async function loginWithFacebook() {
+export async function loginWithFacebook(success, fail) {
     window.FB.login(function (response) {
         if (response.authResponse) {
-            console.log('Welcome!  Fetching your information.... ');
-            //console.log(response); // dump complete info
             let access_token = response.authResponse.accessToken; //get access token
             let user_id = response.authResponse.userID; //get FB UID
             console.log(`access_token`, access_token);
             console.log(`user_id`, user_id);
             window.FB.api('/me', function (response) {
-                let user_email = response.email; //get user email
-                console.log(`user_email`, user_email);
-                // you can store this data into your database             
+                if (response) {
+                    success(response);
+                }
+                else {
+                    fail();
+                }
             });
         }
         else {
