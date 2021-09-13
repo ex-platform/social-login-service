@@ -22,7 +22,7 @@ export function naverService () {
         height: buttonStyles.buttonHeight,
       } /* 로그인 버튼의 타입을 지정 */,
 		});
-		setNaver();
+		// setNaver();
 	}
 
 	const initNaver = (
@@ -41,13 +41,13 @@ export function naverService () {
 			script.src = 'https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js';
 			script.onload = () => {
 				initiate(clientId, callbackUrl, isPopup, buttonStyles);
-				naverLogin.getLoginStatus((status: boolean) => {
-					if (status) {
-						success(naverLogin);
-					} else {
-						fail();
-					}
-				});
+				// naverLogin.getLoginStatus((status: boolean) => {
+				// 	if (status) {
+				// 		success(naverLogin);
+				// 	} else {
+				// 		fail();
+				// 	}
+				// });
 			}
 			script.onerror = error => console.log(error);
 			script.id = scriptId;
@@ -57,13 +57,15 @@ export function naverService () {
 	const setNaver = () => {
 		naverLogin.init();
 	};
-	const getUserInfo = () => {
-		setNaver();
+
+	const getUserInfo = (success, fail) => {
+		// setNaver();
 		naverLogin.getLoginStatus((status: boolean) => {
 			if (status) {
 				const email = naverLogin.user.email;
 				const name = naverLogin.user.name;
 				console.log(email, name);
+				success(email);
 			} else {
 				console.log("AccessToken이 올바르지 않습니다.");
 			}
